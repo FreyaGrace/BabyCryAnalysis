@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Real-time Sound Monitoring with Cry Detection</title>
+  <script src="https://cdn.jsdelivr.net/npm/jquery@3.6.0/dist/jquery.min.js"></script>
+  <style>
+    #audio-stream {
+      width: 500px;
+      height: 200px;
+      border: 1px solid black;
+    }
+  </style>
+</head>
+<body>
+  <h1>Real-time Sound Monitoring</h1>
+  <button id="start_recording">Start Recording</button>
+  <button id="stop_recording">Stop Recording</button>
+  <br>
+  <div id="cry_detection_status">Cry Detected: No</div>
+
+  <div id="audio-stream"></div>
+
+  <script>
+    $(document).ready(function() {
+      // Handle button clicks for recording control (already implemented in Flask)
+      $("#start_recording").click(function() {
+        $.ajax({
+          url: "/start_recording",
+          success: function(response) {
+            console.log(response);
+          }
+        });
+      });
+
+      $("#stop_recording").click(function() {
+        $.ajax({
+          url: "/stop_recording",
+          success: function(response) {
+            console.log(response);
+          }
+        });
+      });
+
+      // Update cry detection status periodically using AJAX
+      function updateCryDetectionStatus() {
+        $.ajax({
+          url: "/is_cry_detected",
+          dataType: "json",
+          success: function(data) {
+            var cryDetected = data.cry_detected;
+            $("#cry_detection_status").text("Cry Detected: " + (cryDetected ? "Yes" : "No"));
+          }
+        });
+      }
+
+      // Call updateCryDetectionStatus every second (adjust interval as needed)
+      setInterval(updateCryDetectionStatus, 1000);
+
+      // Optional: Implement audio stream visualization using libraries like Web Audio API
+      // ...
+    });
+  </script>
+</body>
+</html>
