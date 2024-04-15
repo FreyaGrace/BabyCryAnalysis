@@ -1,6 +1,0 @@
-streamlit
-librosa
-numpy
-pandas
-scikit-learn  # Likely already installed if you have joblib and pickle for model loading
-joblib
