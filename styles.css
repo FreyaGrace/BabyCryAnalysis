@@ -131,9 +131,9 @@ body {
     background-color: #fff;
     border-radius: 5px;
     padding: 20px;
-    max-height: calc(100vh - 200px); /* Adjust as needed */
+    max-height: calc(100vh - 180px); /* Adjust as needed */
    /* overflow-y: auto; */
-    margin-bottom: 150px; /* Ensure space between history and tabs */
+    margin-bottom: 180px; /* Ensure space between history and tabs */
   }
   
   .cry-analysis-graph {
