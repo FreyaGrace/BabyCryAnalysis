@@ -1,0 +1,86 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Baby Cry Analysis</title>
+  <link rel="stylesheet" href="styles.css">
+  <!-- Link to the Font Awesome CSS for icons -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css">
+</head>
+<body>
+  <header>
+    <h1>Baby Cry Analysis</h1>
+    <div class="menu-btn">
+      <i class="fas fa-bars"></i>
+    </div>
+  </header>
+  <main>
+    <section class="audio-spectrum">
+      <h2 id="current-date">April 16, 2024</h2>
+      <canvas id="audio-waveform" width="800" height="150"></canvas>
+      <input type="range" id="audio-slider" min="0" max="100" step="1" value="0">
+      <span id="current-time">00:00</span>
+    </section>
+    <section class="cry-analysis-history">
+      <h2>Cry Analysis History</h2>
+      <div class="cry-analysis-result">
+        <p>Most Recent Cry:</p>
+        <span>Hungry (70%)</span>
+      </div>
+      <div class="cry-analysis-graph">
+        <canvas id="cry-analysis-chart" width="400" height="200"></canvas>
+      </div>
+      <div class="cry-analysis-list">
+        <ul>
+          <li>Time: [time], Result: Hungry (60%)</li>
+          <li>Time: [time], Result: Wetness (80%)</li>
+          <li>Time: [time], Result: Sleepy (90%)</li>
+          <!-- More cry analysis entries can be added dynamically -->
+        </ul>
+      </div>
+    </section>
+  </main>
+  <footer>
+    <nav class="tabs">
+      <a href="#" class="tab-icon" id="record-tab"><i class="fas fa-microphone"></i></a>
+      <a href="#" class="tab-icon active" id="home-tab"><i class="fas fa-home"></i></a>
+      <a href="#" class="tab-icon" id="history-tab"><i class="fas fa-history"></i></a>
+    </nav>
+    <p>&copy; 2024 Infant Cry Analysis App</p>
+  </footer>
+  <!-- JavaScript for audio waveform visualization -->
+  <script>
+    // Function to draw the audio waveform
+    function drawWaveform(samples) {
+      const canvas = document.getElementById('audio-waveform');
+      const context = canvas.getContext('2d');
+      const width = canvas.width;
+      const height = canvas.height;
+      context.clearRect(0, 0, width, height);
+      context.strokeStyle = '#428bca'; // Color of the waveform
+      context.lineWidth = 2;
+
+      context.beginPath();
+      const sliceWidth = width * 1.0 / samples.length;
+      let x = 0;
+      for (let i = 0; i < samples.length; i++) {
+        const v = samples[i] / 128.0; // Normalize the value
+        const y = v * height / 2;
+        if (i === 0) {
+          context.moveTo(x, y);
+        } else {
+          context.lineTo(x, y);
+        }
+        x += sliceWidth;
+      }
+      context.lineTo(canvas.width, canvas.height / 2);
+      context.stroke();
+    }
+
+    // Replace the following function call with real audio functionality
+    // Example usage: drawWaveform([0, 128, 255, 128, 0]);
+    // You need to generate 'samples' array from the audio data
+  </script>
+</body>
+</html>
